@@ -136,20 +136,60 @@ void SatirListesi::Dugum_Sil()
     Dugum_Sayisi--;
     Ort_Hesapla();
 }
+// ostream &operator<<(ostream &os, SatirListesi &Liste)
+// {
+
+//     os << setw(15) << "dugum adresi " << setw(15) << "veri" << setw(15) << "onceki" << setw(15) << "sonraki" << endl;
+
+//     Dugum *gec = Liste.ilk;
+
+//     while (gec != 0)
+//     {
+//         os << setw(15) << gec << setw(15) << gec->veri << setw(15) << gec->onceki << setw(15) << gec->sonraki << endl;
+//         gec = gec->sonraki;
+//     }
+
+//     os << "-------------------------------------" << endl;
+
+//     return os;
+// }
+Dugum * ::SatirListesi::S_ilkDugum()
+{
+    return this->ilk;
+}
 ostream &operator<<(ostream &os, SatirListesi &Liste)
 {
-
-    os << setw(15) << "dugum adresi " << setw(15) << "veri" << setw(15) << "onceki" << setw(15) << "sonraki" << endl;
 
     Dugum *gec = Liste.ilk;
 
     while (gec != 0)
     {
-        os << setw(15) << gec << setw(15) << gec->veri << setw(15) << gec->onceki << setw(15) << gec->sonraki << endl;
+        os << "----------------" << endl;
+        os << "|" << setw(3) << gec << setw(2) << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
+        os << "----------------" << endl;
+        os << "|" << setw(7) << gec->veri << setw(8) << "|" << endl;
+        os << "----------------" << endl;
+        // Duzgun bir sekilde cikabilmesi icin if gec son dugum ise once"|"Yazdir sonra 7 inci basamakta gec yazdir
+        // sonra 8inci basamakta"|" yazdir
+
+        os << "|" << setfill(' ') << setw(14) << gec->sonraki << "|" << endl
+           << endl;
+
+        // if (gec->sonraki == 0)
+        // {
+        //     os << "|" << setw(7) << gec->sonraki << setw(8) << "|" << endl
+        //        << endl;
+        // }
+        // else
+        // {
+        //     os << "|" << setw(3) << gec->sonraki << setw(2) << "|" << endl
+        //        << endl;
+        // }
+
         gec = gec->sonraki;
     }
 
-    os << "-------------------------------------" << endl;
+    os << endl;
 
     return os;
 }

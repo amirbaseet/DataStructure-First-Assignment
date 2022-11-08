@@ -20,6 +20,7 @@ public:
     void Dugum_Sil();
     friend ostream &operator<<(ostream &os, SatirListesi &Liste);
     bool ilk_D_varmi(); // burda ilk dugum var olup olmadigini kontrol ediyorum
+    Dugum *S_ilkDugum();
 
 private:
     Dugum *ilk;

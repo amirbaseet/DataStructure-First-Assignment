@@ -1,5 +1,4 @@
 #include <YoneticiDugum.hpp>
-
 Y_Dugum::Y_Dugum(SatirListesi *S_Liste)
 {
     this->S_Liste = S_Liste;

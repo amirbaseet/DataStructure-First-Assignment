@@ -1,5 +1,6 @@
 #include <YoneticiDugum.hpp>
 #include <YoneticiListesi.hpp>
+#include <SatirListesi.hpp>
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -50,16 +51,26 @@ void ::YoneticiListesi::S_Dugumun_Silme(SatirListesi *S_Dugumun_Silme)
     /*burda Yonetici listesinde satirlistesindeki silinecek dugumun ariyorum*/
     Y_Dugum *gec = ilk;
     bool buldum = false;
-    while (buldum == true)
+    // while (buldum == true)
+    // {
+    //     if (&gec->S_Liste == &S_Dugumun_Silme)
+    //     {
+    //         buldum = true;
+    //     }
+    //     gec = gec->sonraki;
+    // }
+    // burda satirlistenin dugumlardan rastgele olarak birtane siliyorum
+    while (gec->S_Liste != S_Dugumun_Silme)
     {
-        if (&gec->S_Liste == &S_Dugumun_Silme)
-        {
-            buldum = true;
-        }
+        // if (&gec->S_Liste == &S_Dugumun_Silme)
+        // {
+        //     buldum = true;
+        // }
         gec = gec->sonraki;
     }
     // burda satirlistenin dugumlardan rastgele olarak birtane siliyorum
-    gec->S_Liste->Dugum_Sil();
+    // gec->S_Liste->Dugum_Sil();
+    S_Dugumun_Silme->Dugum_Sil();
     /* onu sildikten sonra Satirlistesi kontrol ediyorum eger hic bir dugum yoksa
      Yoneticinin Dugumu silme yap*/
     if (S_Dugumun_Silme->ilk_D_varmi() == false)
@@ -71,6 +82,7 @@ void ::YoneticiListesi::S_Dugumun_Silme(SatirListesi *S_Dugumun_Silme)
     {
         // Varsa YoneteciListesin Dugumundeku  SatirSayisinin Ortalamasi getir
         gec->Ort_Getir();
+        this->Y_Dugum_Siralama();
     }
 }
 void ::YoneticiListesi::Y_Dugumun_Silme(Y_Dugum *silinecek_Dugum)
@@ -184,46 +196,269 @@ void ::YoneticiListesi::Y_Dugum_Siralama()
         }
     }
 }
-
-ostream &operator<<(ostream &os, YoneticiListesi &YListesi)
+void ::YoneticiListesi::YL_Yazdir(SatirListesi *yazdilacak)
 {
-    // os << setw(15) << "dugum adresi " << endl
-    //    << setw(15) << "ortalama" << endl
-    //    << setw(15) << "onceki" << endl
-    //    << setw(15) << "sonraki" << endl;
+    Y_Dugum *gec = this->ilk;
+    int sayac = 0;
+    int isaretci_Uzunlugu = 21; // aslinda uzunlugu 13 ama 8 basamaktan sora gelebilemesi icin ona 8 ya ekliriz
+    int son_on_Uzunlugu = 23;   // aslinda uzunlugu 13 ama || iki tane geldigi icin ona 2 ekliriz
+    cout << setw(14);
+    while (gec != 0)
+    {
+        // os << setw(15) << gec << setw(15) << gec->ortalama << setw(15) << gec->onceki << setw(15) << gec->sonraki << endl;
+        if (gec->sonraki == 0)
+        {
+            cout << gec << endl;
+        }
+        else
+        {
+            cout << gec << setw(isaretci_Uzunlugu);
+        }
+
+        sayac++;
+        gec = gec->sonraki;
+    }
+    cout << setw(14);
+
+    for (int i = 0; i < sayac; i++)
+    {
+        if (i == sayac - 1)
+        {
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+    gec = this->ilk;
+
+    while (gec != 0)
+    {
+        if (gec->onceki == 0)
+        {
+            // os << "|" << setw(9) << gec->onceki << setw(4) << "|" << setw(8);
+            cout << "|"
+                 << "0000000000000"
+                 << "|" << setw(7);
+        }
+        else
+        {
+            cout << "|" << gec->onceki << "|" << setw(7);
+        }
+        gec = gec->sonraki;
+    }
+    cout << endl;
+    cout << setw(14);
+
+    for (int i = 0; i < sayac; i++)
+    {
+        if (i == sayac - 1)
+        {
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+    gec = this->ilk;
+
+    while (gec != 0)
+    {
+        cout << setfill(' '); // Duzgun olusabilimesi icin kullanilan bir fonksiyon setw() kullaninca ' ' indeksi kadar dolduruyor
+        if (gec->sonraki == 0)
+        {
+
+            cout << setw(7) << "|" << setw(13) << gec->ortalama << "|" << endl;
+        }
+        else if (gec == this->ilk)
+        {
+            cout << setw(1) << "|" << setw(13) << gec->ortalama << "|";
+        }
+        else
+        {
+            cout << setw(7) << "|" << setw(13) << gec->ortalama << "|" << setw(15);
+        }
+        gec = gec->sonraki;
+    }
+    cout << setw(14);
+
+    for (int i = 0; i < sayac; i++)
+    {
+        if (i == sayac - 1)
+        {
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+
+    gec = this->ilk;
+
+    while (gec != 0)
+    {
+        if (gec->sonraki == 0)
+        {
+            // os << "|" << setfill(' ') << setw(13) << gec->sonraki
+            //    << "|" << endl;
+            cout << "|" << setw(3) << "0000000000000"
+                 << "|" << endl;
+        }
+        else
+        {
+
+            cout << "|" << setw(3) << gec->sonraki << "|" << setw(7);
+        }
+        gec = gec->sonraki;
+    }
+    cout << setw(14);
+
+    for (int i = 0; i < sayac; i++)
+    {
+        if (i == sayac - 1)
+        {
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+    cout << endl;
+}
+ostream &
+operator<<(ostream &os, YoneticiListesi &YListesi)
+{
 
     Y_Dugum *gec = YListesi.ilk;
     int sayac = 0;
+    int isaretci_Uzunlugu = 21; // aslinda uzunlugu 13 ama 8 basamaktan sora gelebilemesi icin ona 8 ya ekliriz
+    int son_on_Uzunlugu = 23;   // aslinda uzunlugu 13 ama || iki tane geldigi icin ona 2 ekliriz
+    os << setw(14);
     while (gec != 0)
     {
-        os << setw(15) << gec << setw(15);
+        // os << setw(15) << gec << setw(15) << gec->ortalama << setw(15) << gec->onceki << setw(15) << gec->sonraki << endl;
+        if (gec->sonraki == 0)
+        {
+            os << gec << endl;
+        }
+        else
+        {
+            os << gec << setw(isaretci_Uzunlugu);
+        }
 
-        gec = gec->sonraki;
         sayac++;
+        gec = gec->sonraki;
     }
-    gec = YListesi.ilk;
+    os << setw(14);
+
     for (int i = 0; i < sayac; i++)
     {
-        /* code */
+        if (i == sayac - 1)
+        {
+            os << "-------------" << endl;
+        }
+        else
+        {
+            os << "-------------" << setw(21);
+        }
+    }
+    gec = YListesi.ilk;
+
+    while (gec != 0)
+    {
+        if (gec->onceki == 0)
+        {
+            // os << "|" << setw(9) << gec->onceki << setw(4) << "|" << setw(8);
+            os << "|"
+               << "0000000000000"
+               << "|" << setw(7);
+        }
+        else
+        {
+            os << "|" << gec->onceki << "|" << setw(7);
+        }
+        gec = gec->sonraki;
+    }
+    os << endl;
+    os << setw(14);
+
+    for (int i = 0; i < sayac; i++)
+    {
+        if (i == sayac - 1)
+        {
+            os << "-------------" << endl;
+        }
+        else
+        {
+            os << "-------------" << setw(21);
+        }
+    }
+    gec = YListesi.ilk;
+    while (gec != 0)
+    {
+        cout << setfill(' '); // Duzgun olusabilimesi icin kullanilan bir fonksiyon setw() kullaninca ' ' indeksi kadar dolduruyor
+        if (gec->sonraki == 0)
+        {
+
+            os << setw(7) << "|" << setw(13) << gec->ortalama << "|" << endl;
+        }
+        else if (gec == YListesi.ilk)
+        {
+            os << setw(1) << "|" << setw(13) << gec->ortalama << "|";
+        }
+        else
+        {
+            os << setw(7) << "|" << setw(13) << gec->ortalama << "|" << setw(15);
+        }
+        gec = gec->sonraki;
+    }
+    os << setw(14);
+
+    for (int i = 0; i < sayac; i++)
+    {
+        if (i == sayac - 1)
+        {
+            os << "-------------" << endl;
+        }
+        else
+        {
+            os << "-------------" << setw(21);
+        }
     }
 
-    os << "-------------------------------------" << endl;
+    gec = YListesi.ilk;
+    while (gec != 0)
+    {
+        if (gec->sonraki == 0)
+        {
+            // os << "|" << setfill(' ') << setw(13) << gec->sonraki
+            //    << "|" << endl;
+            os << "|" << setw(3) << "0000000000000"
+               << "|" << endl;
+        }
+        else
+        {
 
+            os << "|" << setw(3) << gec->sonraki << "|" << setw(7);
+        }
+        gec = gec->sonraki;
+    }
+    os << setw(14);
+
+    for (int i = 0; i < sayac; i++)
+    {
+        if (i == sayac - 1)
+        {
+            os << "-------------" << endl;
+        }
+        else
+        {
+            os << "-------------" << setw(21);
+        }
+    }
     return os;
 }
-// ostream &operator<<(ostream &os, YoneticiListesi &YListesi)
-// {
-//     os << setw(15) << "dugum adresi " << setw(15) << "ortalama" << setw(15) << "onceki" << setw(15) << "sonraki" << endl;
-
-//     Y_Dugum *gec = YListesi.ilk;
-
-//     while (gec != 0)
-//     {
-//         os << setw(15) << gec << setw(15) << gec->ortalama << setw(15) << gec->onceki << setw(15) << gec->sonraki << endl;
-//         gec = gec->sonraki;
-//     }
-
-//     os << "-------------------------------------" << endl;
-
-//     return os;
-// }

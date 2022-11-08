@@ -22,6 +22,7 @@ public:
     // Bu fonksiyon YoneticiListesindeki Dugumler Kucuken buguge Siralama Yapar
     void Y_Dugum_Siralama();
     int YDugumSayisi_Getir() const;
+    void YL_Yazdir(SatirListesi *yazdirilacak); // YoneticiListesi ve secilen Ydugumun yazdiran bir fonksiyon
     friend ostream &operator<<(ostream &os, YoneticiListesi &YListesi);
 
 private:
