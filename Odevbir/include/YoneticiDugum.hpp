@@ -15,7 +15,6 @@ public:
                        Satirlistesine gidip Ortalamasini Hesaplanip getiren bir fonksiyon*/
 
     SatirListesi *S_Liste; // Burada SatirListesinden bir Isaretici olusturdum
-
     // burda SatirListesinden iki tane isaretci olusturdum
     Y_Dugum *sonraki;
     Y_Dugum *onceki;

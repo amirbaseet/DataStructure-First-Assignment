@@ -84,38 +84,59 @@ bool ::SatirListesi::ilk_D_varmi()
 
     return test;
 }
-void SatirListesi::Dugum_Sil()
+int SatirListesi::Dugum_Sil_rastgele()
 {
+    int Silinecek_index_rastgele;
     if (ilk == 0)
     {
         /*burda  SatirListesi nin dugum sayisi kontrol ediyiorum
         eger hic bir dugum yoksa silme yapmaz*/
-        return;
+        Silinecek_index_rastgele = 0;
     }
     int Dis_Dugum_sayisi = Dugum_Sayisi_Getir();
     if (Dis_Dugum_sayisi == 1)
     {
-        /* Eger Tek Dugum varsa
-        ilk Dugum silinip ilk e 0 atma*/
-        delete ilk;
-        ilk = 0;
+        Silinecek_index_rastgele = 1;
     }
     else
     {
         // burda silinecek dugumun indeksi rastgele olarak getiriyorum
         /* rastgele olmasini sagliyorum her defa ayni deger olmamasi */
         srand(time(NULL));
-        int Silinecek_index_rastgele = rand() % Dis_Dugum_sayisi + 1;
-        cout << "Rand silinecek= \t " << Silinecek_index_rastgele << endl;
-        Dugum *gec = ilk;
-        for (int i = 0; i < Silinecek_index_rastgele - 1; i++)
-        {
-            gec = gec->sonraki;
-        }
-        Dugum *silinecek_Dugum = gec;
-        cout << "\nsilinecek_Dugum Adress = " << silinecek_Dugum << "\tsilinecek_Dugum degiri = " << silinecek_Dugum->veri << endl;
+        Silinecek_index_rastgele = rand() % Dis_Dugum_sayisi + 1;
+    }
+    return Silinecek_index_rastgele;
+}
+
+void ::SatirListesi::Dugum_Sil(Dugum *silinecek_Dugum)
+{
+    int Dis_dugum_sayisi = this->Dugum_Sayisi_Getir(); // disarda dugum sayi tutan biri
+    if (Dis_dugum_sayisi == 0)                         // beni yeniden yap cunku return yapmiyor
+    {
+        /*burda  SatirListesi nin dugum sayisi kontrol ediyiorum
+        eger hic bir dugum yoksa silme yapmaz*/
+        // return;
+        cout << "\n\n\n\nBURDAYIIIIM 119\n\n\n\n\n";
+    }
+    if (Dis_dugum_sayisi == 1)
+    {
+        /* Eger Tek Dugum varsa
+        ilk Dugum silinip ilk e 0 atma*/
+        cout << "\n\n\n\nBURDAYIIIIM 124\n\n\n\n\n";
+
+        delete ilk;
+        ilk = 0;
+        Dugum_Sayisi--;
+    }
+
+    else
+    {
+
+        // get Dugum by index cagirdim bu
+        // Dugum *silinecek_Dugum = silinecek_Dugum;
 
         Dugum *silinecekOnceki = silinecek_Dugum->onceki;
+
         Dugum *silinecekSonraki = silinecek_Dugum->sonraki;
 
         /*eger silinecek dugumun sonraki nin varsa
@@ -132,31 +153,44 @@ void SatirListesi::Dugum_Sil()
             ilk = silinecekSonraki;
 
         delete silinecek_Dugum; // silinecek dugum silip ve Dugum sayisi bir azaltik
+        Dugum_Sayisi--;
     }
-    Dugum_Sayisi--;
     Ort_Hesapla();
 }
-// ostream &operator<<(ostream &os, SatirListesi &Liste)
-// {
 
-//     os << setw(15) << "dugum adresi " << setw(15) << "veri" << setw(15) << "onceki" << setw(15) << "sonraki" << endl;
-
-//     Dugum *gec = Liste.ilk;
-
-//     while (gec != 0)
-//     {
-//         os << setw(15) << gec << setw(15) << gec->veri << setw(15) << gec->onceki << setw(15) << gec->sonraki << endl;
-//         gec = gec->sonraki;
-//     }
-
-//     os << "-------------------------------------" << endl;
-
-//     return os;
-// }
-Dugum * ::SatirListesi::S_ilkDugum()
+Dugum * ::SatirListesi::get_D_byindeks(int indeks)
 {
-    return this->ilk;
+    Dugum *gec = ilk;
+
+    for (int i = 0; i < indeks - 1; i++)
+    {
+        gec = gec->sonraki;
+    }
+    return gec;
 }
+void ::SatirListesi::YD_Sat_Dugm_Yazdir(int mesafe)
+{
+    Dugum *gec = this->ilk;
+    cout << setfill(' ');
+    while (gec != 0)
+    {
+        cout << setw(mesafe) << "-"
+             << "---------------" << endl;
+        cout << setw(mesafe) << "|" << setw(3) << gec << setw(2) << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
+        cout << setw(mesafe) << "-"
+             << "---------------" << endl;
+        cout << setw(mesafe) << "|" << setw(7) << gec->veri << setw(8) << "|" << endl;
+        cout << setw(mesafe) << "-"
+             << "---------------" << endl;
+        // Duzgun bir sekilde cikabilmesi icin if gec son dugum ise once"|"Yazdir sonra 7 inci basamakta gec yazdir
+        // sonra 8inci basamakta"|" yazdir
+
+        cout << setw(mesafe) << "|" << setw(14) << gec->sonraki << "|" << endl
+             << endl;
+        gec = gec->sonraki;
+    }
+}
+
 ostream &operator<<(ostream &os, SatirListesi &Liste)
 {
 
@@ -174,17 +208,6 @@ ostream &operator<<(ostream &os, SatirListesi &Liste)
 
         os << "|" << setfill(' ') << setw(14) << gec->sonraki << "|" << endl
            << endl;
-
-        // if (gec->sonraki == 0)
-        // {
-        //     os << "|" << setw(7) << gec->sonraki << setw(8) << "|" << endl
-        //        << endl;
-        // }
-        // else
-        // {
-        //     os << "|" << setw(3) << gec->sonraki << setw(2) << "|" << endl
-        //        << endl;
-        // }
 
         gec = gec->sonraki;
     }

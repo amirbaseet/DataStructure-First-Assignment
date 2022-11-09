@@ -9,6 +9,11 @@ YoneticiListesi::YoneticiListesi()
     ilk = 0;
     Y_Dugum_Sayisi = 0;
 }
+YoneticiListesi::~YoneticiListesi()
+{
+    cout << endl
+         << this << "YoneticiListesi::~YoneticiListesi()\n";
+}
 void ::YoneticiListesi::Y_Dugum_Ekle(SatirListesi *Eklenecek_Satir)
 {
     Y_Dugum *yeni = new Y_Dugum(Eklenecek_Satir);
@@ -36,52 +41,23 @@ int ::YoneticiListesi::YDugumSayisi_Getir() const
 {
     return Y_Dugum_Sayisi;
 }
-void ::YoneticiListesi::S_Dugumun_Silme(SatirListesi *S_Dugumun_Silme)
+void ::YoneticiListesi::S_Dugumun_Silme(Y_Dugum *S_sildugum, Dugum *S_Dugumun_Silme)
 {
-
-    // S_Dugumun_Silme->Dugum_Sil();
-    // int Dis_YDugumSayisi = YDugumSayisi_Getir();
-    // Y_Dugum *gec = ilk;
-    // for (int i = 0; i < Dis_YDugumSayisi; i++)
-    // {
-    //     gec->Ort_Getir();
-    //     gec = gec->sonraki;
-    // }
-
-    /*burda Yonetici listesinde satirlistesindeki silinecek dugumun ariyorum*/
-    Y_Dugum *gec = ilk;
-    bool buldum = false;
-    // while (buldum == true)
-    // {
-    //     if (&gec->S_Liste == &S_Dugumun_Silme)
-    //     {
-    //         buldum = true;
-    //     }
-    //     gec = gec->sonraki;
-    // }
-    // burda satirlistenin dugumlardan rastgele olarak birtane siliyorum
-    while (gec->S_Liste != S_Dugumun_Silme)
-    {
-        // if (&gec->S_Liste == &S_Dugumun_Silme)
-        // {
-        //     buldum = true;
-        // }
-        gec = gec->sonraki;
-    }
-    // burda satirlistenin dugumlardan rastgele olarak birtane siliyorum
-    // gec->S_Liste->Dugum_Sil();
-    S_Dugumun_Silme->Dugum_Sil();
+    // bu fonksiyonda Y_Dugum Dugum sinifindan birer isaretci olusturdum
+    // ilk once  silinecek SatirListesindeki dugume silme yap
+    //  burda satirlistenin dugumlardan rastgele olarak birtane siliyorum
+    S_sildugum->S_Liste->Dugum_Sil(S_Dugumun_Silme);
     /* onu sildikten sonra Satirlistesi kontrol ediyorum eger hic bir dugum yoksa
      Yoneticinin Dugumu silme yap*/
-    if (S_Dugumun_Silme->ilk_D_varmi() == false)
+    if (this->YDugumSayisi_Getir() == 0)
     {
-        // Yoneticinin Dugumu silme yap
-        Y_Dugumun_Silme(gec);
+        Y_Dugumun_Silme(S_sildugum);
     }
     else
     {
-        // Varsa YoneteciListesin Dugumundeku  SatirSayisinin Ortalamasi getir
-        gec->Ort_Getir();
+        // Varsa YoneteciListesin Dugumundeku  SatirSayisinin Ortalamasi getirip
+        // Yonetici Dugumlari sirala
+        S_sildugum->Ort_Getir();
         this->Y_Dugum_Siralama();
     }
 }
@@ -124,7 +100,11 @@ void ::YoneticiListesi::Y_Dugumun_Silme(Y_Dugum *silinecek_Dugum)
         delete silinecek_Dugum; // silinecek dugum siliyorum
     }
 
-    Y_Dugum_Sayisi--; // Yoneticinin Dugum sayisi bir azaltik
+    Y_Dugum_Sayisi--;        // Yoneticinin Dugum sayisi bir azaltik
+    if (Y_Dugum_Sayisi == 0) // eger Yoneticin Dugum Sayisi 0 ise YonetiListesi sil
+    {
+        this->~YoneticiListesi();
+    }
 }
 void ::YoneticiListesi::Y_Dugumun_Degistir(Y_Dugum *Degis_Dugum) // Degisecek Dugumun Adresi Disardan aliyorum
 {
@@ -196,7 +176,11 @@ void ::YoneticiListesi::Y_Dugum_Siralama()
         }
     }
 }
-void ::YoneticiListesi::YL_Yazdir(SatirListesi *yazdilacak)
+Y_Dugum * ::YoneticiListesi::ilkGetir() const
+{
+    return this->ilk;
+}
+void ::YoneticiListesi::YL_Yazdir()
 {
     Y_Dugum *gec = this->ilk;
     int sayac = 0;

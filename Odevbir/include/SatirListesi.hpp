@@ -17,10 +17,14 @@ public:
     void Dugum_Ekle(const int veri);
     void Ort_Hesapla();
     // Dugum silme fonksiyonu tanitiyorum disardan sabit int veri alip ekleme yapar
-    void Dugum_Sil();
-    friend ostream &operator<<(ostream &os, SatirListesi &Liste);
+    int Dugum_Sil_rastgele(); // rastgele silinecek dugumun indeksi dondur
+    void Dugum_Sil(Dugum *silinecek_Dugum);
+    // void Dugum_Sil_byineks(int silinecek_indeks);
+    friend ostream &
+    operator<<(ostream &os, SatirListesi &Liste);
     bool ilk_D_varmi(); // burda ilk dugum var olup olmadigini kontrol ediyorum
-    Dugum *S_ilkDugum();
+    Dugum *get_D_byindeks(int indeks);
+    void YD_Sat_Dugm_Yazdir(int mesafe);
 
 private:
     Dugum *ilk;
