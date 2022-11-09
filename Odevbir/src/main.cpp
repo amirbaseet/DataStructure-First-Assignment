@@ -27,6 +27,10 @@ int main()
      test3->Dugum_Ekle(177);
      test3->Dugum_Ekle(882);
      test3->Dugum_Ekle(844);
+     test3->Dugum_Ekle(904);
+     test3->Dugum_Ekle(841);
+     test3->Dugum_Ekle(759);
+     test3->Dugum_Ekle(844);
 
      SatirListesi *test4 = new SatirListesi;
      test4->Dugum_Ekle(1);
@@ -34,10 +38,9 @@ int main()
 
      YoneticiListesi *YTest = new YoneticiListesi;
      YTest->Y_Dugum_Ekle(test1);
-     // YTest->Y_Dugum_Ekle(test);
-     // YTest->Y_Dugum_Ekle(test3);
-     // YTest->Y_Dugum_Ekle(test4);
-     cout << "\n/**********************/\nSiralama yaptim\n";
+     YTest->Y_Dugum_Ekle(test);
+     YTest->Y_Dugum_Ekle(test3);
+     YTest->Y_Dugum_Ekle(test4);
      YTest->Y_Dugum_Siralama();
      // YTest.YL_Yazdir();
      int birblok = 22; // her bir iki dugumun arasinda uzaklasacak mesafe
@@ -45,19 +48,18 @@ int main()
      int uzaklasacak_mesafe = birblok * secilen;
      Y_Dugum *secilen_YDugum = YTest->ilkGetir();
      Y_Dugum *Silinecek_YD;
+     Y_Dugum *ilk;
      char in;
-     system("cls");
-
-     cout << *YTest;
 
      secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
      do
      {
-          cin >> in;
           system("cls");
-          // cout << *YTest;
-          // uzaklasacak_mesafe = birblok * secilen;
-          // secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
+          cout << *YTest;
+          uzaklasacak_mesafe = birblok * secilen;
+          secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
+          cout << "\nSecilen = " << secilen << "\tILK DUGUM = " << YTest->ilkGetir() << endl;
+          cin >> in;
           switch (in)
           {
                /*sonraki/onceki YDugum sec case z &c*/
@@ -81,49 +83,44 @@ int main()
                if (secilen_YDugum->sonraki != 0)
                {
                     /* Eger Secilen Dugum son ise sonrasina gitmez*/
-
-                    secilen_YDugum = secilen_YDugum->sonraki;
                     secilen++;
-                    cout << secilen;
+                    secilen_YDugum = secilen_YDugum->sonraki;
                }
 
                // secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
 
                break;
           case 'p':
-               cout << "\5\n";
                /*p bastiginda Yonetici Dugumu Cikaritilacaktir*/
-               if (YTest->ilkGetir() != 0) // Eger Hic bir dugum kalmamis ise burada girmez
+               ilk = YTest->ilkGetir(); // ilk dugumu Degiri getirdim
+               if (ilk != 0)            // Eger Hic bir dugum kalmamis ise burada girmez
                {
-                    cout << "\n100\n";
                     Silinecek_YD = secilen_YDugum;
                     if (secilen_YDugum->onceki != 0)
                     {
                          secilen_YDugum = secilen_YDugum->onceki;
+                         secilen--;
                     }
                     else
                     {
                          secilen_YDugum = secilen_YDugum->sonraki;
+                         if (Silinecek_YD != ilk) // Eger silinecek Dugum ilk Dugume isset ise secilenden azaltmaz
+                         {
+                              /* code */
+                              secilen--;
+                         }
                     }
-                    secilen--;
 
-                    if (secilen < 0)
-                         secilen = 0;
-
-                    cout << "||" << YTest->YDugumSayisi_Getir() << endl;
-
-                    YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
-                    cout << YTest->YDugumSayisi_Getir() << endl;
+                    if (YTest->YDugumSayisi_Getir() == 1)
+                    {
+                         YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
+                         cout << "Hic bir Dugum kalmadigi icin Yonetici listesi silinicek program sonlandirilacak\n";
+                         in = '8';
+                    }
+                    else
+                         YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
 
                     /* code */
-                    cout << "\n\n121\n";
-                    cout << "\n\n123\n";
-               }
-               else
-               {
-                    cout << "Hic bir Dugum kalmadigi icin Yonetici listesi silinicek program sonlandirilacak\n";
-                    // exit(1);
-                    in = '8';
                }
 
                break;

@@ -22,7 +22,7 @@ void ::YoneticiListesi::Y_Dugum_Ekle(SatirListesi *Eklenecek_Satir)
     {
         /* code */
         ilk = yeni;
-    }
+        }
     else
     {
         Y_Dugum *gec = ilk;
@@ -72,7 +72,7 @@ void ::YoneticiListesi::Y_Dugumun_Silme(Y_Dugum *silinecek_Dugum)
     // Yonetici listesinin dugum sayisi sifir degilse silme yapar
 
     int Dis_YDugumSayisi = YDugumSayisi_Getir();
-    if (Dis_YDugumSayisi == 1)
+    if (Dis_YDugumSayisi == 0)
     {
         /* Eger Tek Dugum varsa
          ilk Dugum silinip ilk e 0 atma yapar*/
