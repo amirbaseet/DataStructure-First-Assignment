@@ -22,7 +22,7 @@ void ::YoneticiListesi::Y_Dugum_Ekle(SatirListesi *Eklenecek_Satir)
     {
         /* code */
         ilk = yeni;
-        }
+    }
     else
     {
         Y_Dugum *gec = ilk;
@@ -36,6 +36,162 @@ void ::YoneticiListesi::Y_Dugum_Ekle(SatirListesi *Eklenecek_Satir)
         yeni->onceki = gec;
     }
     Y_Dugum_Sayisi++;
+}
+Y_Dugum * ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis, Y_Dugum *secilen)
+{
+    cout << "\n\n42BAslangic =" << Baslan << "Bitis = " << bitis;
+
+    int isaretci_Uzunlugu = 21; // aslinda uzunlugu 13 ama 8 basamaktan sora gelebilemesi icin ona 8 ya ekliriz
+    int son_on_Uzunlugu = 23;   // aslinda uzunlugu 13 ama || iki tane geldigi icin ona 2 ekliriz
+    bitis -= Baslan;            // yazdirilacak sayisi getiriyorum bitis degerden  baslangec deger alarak
+    if (bitis == 0)
+        bitis++;
+    cout << "\n\n47BAslangic =" << Baslan << "Bitis = " << bitis;
+    ////
+    Y_Dugum *gec;
+    secilen = this->ilk;
+    for (int i = 0; i < Baslan; i++)
+    {
+        /* code */
+        secilen = secilen->sonraki; // bu yeni Sayfanin ilk dugumu olacak
+    }
+
+    gec = secilen;
+
+    cout << endl
+         << setw(14);
+    for (int i = 0; i < bitis; i++)
+    {
+        if (gec->sonraki == 0)
+        {
+            cout << "\n Yonetici Bordayiim 64 GEc ADresi = " << gec << "\n";
+
+            cout << gec << endl;
+        }
+        else
+        {
+
+            cout << gec << setw(isaretci_Uzunlugu);
+        }
+        gec = gec->sonraki;
+    }
+    cout << endl;
+    cout << setw(14);
+
+    for (int i = 0; i < bitis; i++)
+    {
+        if (i == (bitis - 1))
+        {
+
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+    gec = secilen;
+
+    for (int i = 0; i < bitis; i++)
+    {
+        if (gec->onceki == 0)
+        {
+            // os << "|" << setw(9) << gec->onceki << setw(4) << "|" << setw(8);
+            cout << "|"
+                 << "0000000000000"
+                 << "|" << setw(7);
+        }
+        else
+        {
+            cout << "|" << gec->onceki << "|" << setw(7);
+        }
+        gec = gec->sonraki;
+    }
+
+    cout << endl;
+    cout << setw(14);
+
+    for (int i = 0; i < bitis; i++)
+    {
+        if (i == bitis - 1)
+        {
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+    gec = secilen;
+
+    for (int i = 0; i < bitis; i++)
+    {
+        cout << setfill(' '); // Duzgun olusabilimesi icin kullanilan bir fonksiyon setw() kullaninca ' ' indeksi kadar dolduruyor
+        if (gec->sonraki == 0)
+        {
+
+            cout << setw(7) << "|" << setw(13) << gec->ortalama << "|" << endl;
+        }
+        else if (gec == secilen)
+        {
+            cout << setw(1) << "|" << setw(13) << gec->ortalama << "|";
+        }
+        else
+        {
+            cout << setw(7) << "|" << setw(13) << gec->ortalama << "|" << setw(15);
+        }
+        gec = gec->sonraki;
+    }
+    cout << endl;
+    cout << setw(14);
+
+    for (int i = 0; i < bitis; i++)
+    {
+        if (i == bitis - 1)
+        {
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+
+    gec = secilen;
+
+    for (int i = 0; i < bitis; i++)
+    {
+        if (gec->sonraki == 0)
+        {
+            // os << "|" << setfill(' ') << setw(13) << gec->sonraki
+            //    << "|" << endl;
+            cout << "|" << setw(3) << "0000000000000"
+                 << "|" << endl;
+        }
+        else
+        {
+
+            cout << "|" << setw(3) << gec->sonraki << "|" << setw(7);
+        }
+        gec = gec->sonraki;
+    }
+    cout << endl;
+
+    cout << setw(14);
+
+    for (int i = 0; i < bitis; i++)
+    {
+        if (i == bitis - 1)
+        {
+            cout << "-------------" << endl;
+        }
+        else
+        {
+            cout << "-------------" << setw(21);
+        }
+    }
+    cout << endl;
+    return secilen;
 }
 int ::YoneticiListesi::YDugumSayisi_Getir() const
 {
@@ -100,11 +256,7 @@ void ::YoneticiListesi::Y_Dugumun_Silme(Y_Dugum *silinecek_Dugum)
         delete silinecek_Dugum; // silinecek dugum siliyorum
     }
 
-    Y_Dugum_Sayisi--;        // Yoneticinin Dugum sayisi bir azaltik
-    if (Y_Dugum_Sayisi == 0) // eger Yoneticin Dugum Sayisi 0 ise YonetiListesi sil
-    {
-        this->~YoneticiListesi();
-    }
+    Y_Dugum_Sayisi--; // Yoneticinin Dugum sayisi bir azaltik
 }
 void ::YoneticiListesi::Y_Dugumun_Degistir(Y_Dugum *Degis_Dugum) // Degisecek Dugumun Adresi Disardan aliyorum
 {
