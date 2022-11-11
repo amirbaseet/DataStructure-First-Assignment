@@ -37,8 +37,13 @@ void ::YoneticiListesi::Y_Dugum_Ekle(SatirListesi *Eklenecek_Satir)
     }
     Y_Dugum_Sayisi++;
 }
-Y_Dugum * ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis, Y_Dugum *secilen)
+void ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis)
 {
+    Y_Dugum *secilen;
+    if (this->ilk == 0)
+    {
+        cout << "Listesi Bos gosterilecek bir sey yok\n";
+    }
     cout << "\n\n42BAslangic =" << Baslan << "Bitis = " << bitis;
 
     int isaretci_Uzunlugu = 21; // aslinda uzunlugu 13 ama 8 basamaktan sora gelebilemesi icin ona 8 ya ekliriz
@@ -64,8 +69,6 @@ Y_Dugum * ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis, Y_Dugum *secil
     {
         if (gec->sonraki == 0)
         {
-            cout << "\n Yonetici Bordayiim 64 GEc ADresi = " << gec << "\n";
-
             cout << gec << endl;
         }
         else
@@ -191,8 +194,8 @@ Y_Dugum * ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis, Y_Dugum *secil
         }
     }
     cout << endl;
-    return secilen;
 }
+
 int ::YoneticiListesi::YDugumSayisi_Getir() const
 {
     return Y_Dugum_Sayisi;

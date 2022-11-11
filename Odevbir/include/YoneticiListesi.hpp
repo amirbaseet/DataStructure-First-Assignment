@@ -24,8 +24,9 @@ public:
     void Y_Dugum_Siralama();
     int YDugumSayisi_Getir() const;
     Y_Dugum *ilkGetir() const;
-    void YL_Yazdir();                                                // YoneticiListesi yazdiran bir fonksiyon
-    Y_Dugum *YL_Sag_Yazdir(int Baslan, int bitis, Y_Dugum *secilen); // YoneticiListesi yazdiran bir fonksiyon ve aynisi Ydugum dondurecek
+    void YL_Yazdir(); // YoneticiListesi yazdiran bir fonksiyon
+    // Y_Dugum *YL_Sag_Yazdir(int Baslan, int bitis, Y_Dugum *secilen); // YoneticiListesi yazdiran bir fonksiyon ve aynisi Ydugum dondurecek
+    void YL_Sag_Yazdir(int Baslan, int bitis); // YoneticiListesi yazdiran bir fonksiyon ve aynisi Ydugum dondurecek
     friend ostream &operator<<(ostream &os, YoneticiListesi &YListesi);
 
 private:
