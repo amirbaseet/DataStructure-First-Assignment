@@ -1,3 +1,11 @@
+/**
+ * @file YoneticiDugum.cpp
+ * @description Programınızın açıklaması ne yaptığına dair.
+ * @course 2C
+ * @assignment birinci ödev
+ * @date 1/12/2022
+ * @author AMRO MOUSA ISMAIL BASEET
+ */
 #include <YoneticiDugum.hpp>
 Y_Dugum::Y_Dugum(SatirListesi *S_Liste)
 {

@@ -1,3 +1,11 @@
+/**
+ * @file SatirListesi.hpp
+ * @description Programınızın açıklaması ne yaptığına dair.
+ * @course 2C
+ * @assignment birinci ödev
+ * @date 1/12/2022
+ * @author AMRO MOUSA ISMAIL BASEET
+ */
 #ifndef SatirListesi_hpp
 #define SatirListesi_hpp
 #include <iostream>
@@ -22,9 +30,9 @@ public:
     // void Dugum_Sil_byineks(int silinecek_indeks);
     friend ostream &
     operator<<(ostream &os, SatirListesi &Liste);
-    bool ilk_D_varmi(); // burda ilk dugum var olup olmadigini kontrol ediyorum
     Dugum *get_D_byindeks(int indeks);
     void YD_Sat_Dugm_Yazdir(int mesafe);
+    void YD_silinecek_Sat_Dugm_Yazdir_(Dugum *silinecek, int mesafe);
 
 private:
     Dugum *ilk;

@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @description Programınızın açıklaması ne yaptığına dair.
+ * @course 2C
+ * @assignment birinci ödev
+ * @date 1/12/2022
+ * @author AMRO MOUSA ISMAIL BASEET
+ */
 #include <Dugum.hpp>
 #include <SatirListesi.hpp>
 #include <YoneticiDugum.hpp>
@@ -128,15 +136,16 @@ int main()
           {
                okun_st[Kacinci_sati].Dugum_Ekle(stoi(str));
           }
-          YTest->Y_Dugum_Ekle(&okun_st[Kacinci_sati]);
+          if (okun_st[Kacinci_sati].Dugum_Sayisi_Getir() != 0)
+          {
+               YTest->Y_Dugum_Ekle(&okun_st[Kacinci_sati]);
+          }
           Kacinci_sati++;
      }
      myfile.close();
-     // delete[] okun_st;
-     YTest->Y_Dugum_Siralama();
+     YTest->Y_Dugum_Siralama(); // ekleme yaptiktan sonra yonetici dugum listesi ortalamasine gore siraliyorum
 
      float birblok = 21.3; // her bir iki dugumun arasinda uzaklasacak mesafe
-     // int birblok = 21; // her bir iki dugumun arasinda uzaklasacak mesafe
      int secilen = 0;
      float sayfa_Adet = 0.000;
      float burayakadar_yazdir;
@@ -163,7 +172,7 @@ int main()
      char intest;
      do
      {
-          // system("cls");
+          system("cls");
 
           YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
           sayfa_Adet = YD_Dugumsayisi / 8;
@@ -235,7 +244,9 @@ int main()
           case 'k':
                // secilen ydugmun rastgele secme
                silinecekDugumun_indeksi = secilen_YDugum->S_Liste->Dugum_Sil_rastgele();
+               YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
                silinecek_Dugum = secilen_YDugum->S_Liste->get_D_byindeks(silinecekDugumun_indeksi);
+               secilen_YDugum->S_Liste->YD_silinecek_Sat_Dugm_Yazdir_(silinecek_Dugum, uzaklasacak_mesafe);
                cin >> sil_mi;
                if (sil_mi == 'k')
                {

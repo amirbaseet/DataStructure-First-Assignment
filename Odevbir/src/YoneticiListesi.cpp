@@ -1,3 +1,11 @@
+/**
+ * @file YoneticiListesi.cpp
+ * @description Programınızın açıklaması ne yaptığına dair.
+ * @course 2C
+ * @assignment birinci ödev
+ * @date 1/12/2022
+ * @author AMRO MOUSA ISMAIL BASEET
+ */
 #include <YoneticiDugum.hpp>
 #include <YoneticiListesi.hpp>
 #include <SatirListesi.hpp>
@@ -72,7 +80,31 @@ void ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis)
         /* code */
         secilen = secilen->sonraki; // bu yeni Sayfanin ilk dugumu olacak
     }
+    gec = secilen;
+    cout << endl;
+    int blok = 22; // her iki Yonetici Dugum arasinda 22 simdi
+    for (int i = 0; i < bitis; i++)
+    {
+        if (gec == ilk) // ilk dugumun ustundeki ilk yaz
+        {
+            cout << "ilk" << setw(blok * (bitis - 1)); // her iki Yonetici Dugum arasinda 22 simdi ona yazdirilacak dugum sayisi carparsak eger tam yerinde gececek
+        }
 
+        if (i == bitis - 1 && gec->sonraki != 0) // eger sagadaki bir sayfa varsa ustundeki --> yazdir
+        {
+            cout << "--->" << endl;
+        }
+        if (Baslan != 0 && i == 0)
+        {
+            cout << "<---" << setw(blok * (bitis - 1));
+        }
+        if (gec->sonraki == 0) // sondugumun ustundeki Son yaz
+        {
+            cout << "son" << endl;
+        }
+
+        gec = gec->sonraki;
+    }
     gec = secilen;
 
     cout << endl

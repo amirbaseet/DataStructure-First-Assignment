@@ -84,16 +84,7 @@ void SatirListesi::Dugum_Ekle(const int veri)
     }
     Dugum_Sayisi++; // dugumun sayisi bir arttirdim
 }
-bool ::SatirListesi::ilk_D_varmi()
-{
-    bool test = false;
-    if (ilk != 0)
-    {
-        test = true;
-    }
-
-    return test;
-}
+//
 int SatirListesi::Dugum_Sil_rastgele()
 {
     int Silinecek_index_rastgele;
@@ -177,6 +168,32 @@ Dugum * ::SatirListesi::get_D_byindeks(int indeks)
         gec = gec->sonraki;
     }
     return gec;
+}
+void ::SatirListesi::YD_silinecek_Sat_Dugm_Yazdir_(Dugum *silinecek, int mesafe)
+{
+    // silinecek Dugumun animasiyonu yaptim
+    Dugum *gec = this->ilk;
+    cout << setfill(' ');
+    while (gec != 0)
+    {
+        cout << setw(mesafe) << ""
+             << "---------------" << endl;
+        cout << setw(mesafe) << "|" << setw(3) << gec << setw(2) << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
+        cout << setw(mesafe) << ""
+             << "---------------" << endl;
+        cout << setw(mesafe) << "|" << setw(7) << gec->veri << setw(8) << "|" << endl;
+        cout << setw(mesafe) << ""
+             << "---------------";
+        if (gec == silinecek)
+            cout << setw(10) << "<-----silinecek secili";
+        cout << endl;
+        // Duzgun bir sekilde cikabilmesi icin if gec son dugum ise once"|"Yazdir sonra 7 inci basamakta gec yazdir
+        // sonra 8inci basamakta"|" yazdir
+
+        cout << setw(mesafe) << "|" << setw(14) << gec->sonraki << "|" << endl
+             << endl;
+        gec = gec->sonraki;
+    }
 }
 void ::SatirListesi::YD_Sat_Dugm_Yazdir(int mesafe)
 {
