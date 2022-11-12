@@ -13,6 +13,18 @@ YoneticiListesi::~YoneticiListesi()
 {
     cout << endl
          << this << "YoneticiListesi::~YoneticiListesi()\n";
+    cout << this << "\t~SatirListesi()" << endl;
+    if (this->ilk == 0)
+        return;
+    Y_Dugum *gecici = this->ilk;
+    Y_Dugum *silinecek;
+    for (int i = 0; i < this->YDugumSayisi_Getir(); i++)
+    {
+        silinecek = gecici;
+        gecici = gecici->sonraki;
+        cout << silinecek << " Dugum adresi silindi YoneticiListesi::~YoneticiListesi()\n";
+        delete silinecek;
+    }
 }
 void ::YoneticiListesi::Y_Dugum_Ekle(SatirListesi *Eklenecek_Satir)
 {
@@ -208,16 +220,10 @@ void ::YoneticiListesi::S_Dugumun_Silme(Y_Dugum *S_sildugum, Dugum *S_Dugumun_Si
     S_sildugum->S_Liste->Dugum_Sil(S_Dugumun_Silme);
     /* onu sildikten sonra Satirlistesi kontrol ediyorum eger hic bir dugum yoksa
      Yoneticinin Dugumu silme yap*/
-    if (this->YDugumSayisi_Getir() == 0)
+    if (S_sildugum->S_Liste->Dugum_Sayisi_Getir() != 0)
     {
-        Y_Dugumun_Silme(S_sildugum);
-    }
-    else
-    {
-        // Varsa YoneteciListesin Dugumundeku  SatirSayisinin Ortalamasi getirip
-        // Yonetici Dugumlari sirala
+        // Varsa YoneteciListesin Dugumundeku  SatirSayisinin Ortalamasi getir
         S_sildugum->Ort_Getir();
-        this->Y_Dugum_Siralama();
     }
 }
 void ::YoneticiListesi::Y_Dugumun_Silme(Y_Dugum *silinecek_Dugum)

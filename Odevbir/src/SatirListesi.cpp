@@ -14,6 +14,16 @@ SatirListesi::SatirListesi()
 SatirListesi::~SatirListesi()
 {
     cout << this << "\t~SatirListesi()" << endl;
+    if (this->ilk == 0)
+        return;
+    Dugum *gecici = this->ilk;
+    for (int i = 0; i < this->Dugum_Sayisi_Getir(); i++)
+    {
+        Dugum *silinecek = gecici;
+        gecici = gecici->sonraki;
+        cout << silinecek << " Dugum adresi silindi SatirListesi::~SatirListesi()\n";
+        delete silinecek;
+    }
 }
 int SatirListesi::Dugum_Sayisi_Getir() const
 {
@@ -174,13 +184,13 @@ void ::SatirListesi::YD_Sat_Dugm_Yazdir(int mesafe)
     cout << setfill(' ');
     while (gec != 0)
     {
-        cout << setw(mesafe) << "-"
+        cout << setw(mesafe) << ""
              << "---------------" << endl;
         cout << setw(mesafe) << "|" << setw(3) << gec << setw(2) << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
-        cout << setw(mesafe) << "-"
+        cout << setw(mesafe) << ""
              << "---------------" << endl;
         cout << setw(mesafe) << "|" << setw(7) << gec->veri << setw(8) << "|" << endl;
-        cout << setw(mesafe) << "-"
+        cout << setw(mesafe) << ""
              << "---------------" << endl;
         // Duzgun bir sekilde cikabilmesi icin if gec son dugum ise once"|"Yazdir sonra 7 inci basamakta gec yazdir
         // sonra 8inci basamakta"|" yazdir
