@@ -196,12 +196,14 @@ int main()
           else
           {
                YTest->YL_Yazdir();
-               cout << "HIC BIR DUGUM KALMADIGINDAN BIR SEY GOSTERILMEYECEK BASIN PROGRAM SOLANDIRMAK ICIN LUTFEN 8 E\n";
+               cout << "HIC BIR DUGUM KALMADIGINDAN BIR SEY GOSTERILMEYECEK  HEAP TE KALAN NESNELER SILIP VE PROGRAM SOLANDIRMAK  ICIN LUTFEN 8 BASIN E\n";
                cin >> intest;
                if (intest == '8')
                {
-                    cout << "HEAP te bulunan nesneler siliyorum \n";
                     in = '8';
+               }
+               else
+               {
                }
           }
 
@@ -239,52 +241,58 @@ int main()
                break;
           case 'k':
                // secilen ydugmun rastgele secme
-               system("cls");
-
-               silinecekDugumun_indeksi = secilen_YDugum->S_Liste->Dugum_Sil_rastgele();
-               YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
-               silinecek_Dugum = secilen_YDugum->S_Liste->get_D_byindeks(silinecekDugumun_indeksi);
-               secilen_YDugum->S_Liste->YD_silinecek_Sat_Dugm_Yazdir_(silinecek_Dugum, uzaklasacak_mesafe);
-               cin >> sil_mi;
-               if (sil_mi == 'k')
+               if (YTest->ilkGetir())
                {
-                    secilen_YDugum->S_Liste->Dugum_Sil(silinecek_Dugum);
+                    system("cls");
 
-                    if (secilen_YDugum->S_Liste->Dugum_Sayisi_Getir() != 0)
+                    silinecekDugumun_indeksi = secilen_YDugum->S_Liste->Dugum_Sil_rastgele();
+                    YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
+                    silinecek_Dugum = secilen_YDugum->S_Liste->get_D_byindeks(silinecekDugumun_indeksi);
+                    secilen_YDugum->S_Liste->YD_silinecek_Sat_Dugm_Yazdir_(silinecek_Dugum, uzaklasacak_mesafe);
+                    cin >> sil_mi;
+                    if (sil_mi == 'k')
                     {
-                         secilen_YDugum->Ort_Getir();
+                         secilen_YDugum->S_Liste->Dugum_Sil(silinecek_Dugum);
 
-                         YTest->Y_Dugum_Siralama();
-                    }
-                    else
-                    {
-                         ilk = YTest->ilkGetir(); // ilk dugumu Degiri getirdim
-                         if (ilk != 0)            // Eger Hic bir dugum kalmamis ise burada girmez
+                         if (secilen_YDugum->S_Liste->Dugum_Sayisi_Getir() != 0)
                          {
-                              Silinecek_YD = secilen_YDugum;
-                              if (secilen_YDugum->onceki == 0)
+                              cout << "\n\n254\n\n";
+                              secilen_YDugum->Ort_Getir();
+                              YTest->Y_Dugum_Siralama();
+                         }
+                         else
+                         {
+                              ilk = YTest->ilkGetir(); // ilk dugumu Degiri getirdim
+                              if (ilk != 0)            // Eger Hic bir dugum kalmamis ise burada girmez
                               {
-                                   secilen_YDugum = secilen_YDugum->sonraki;
-                              }
-                              else
-                              {
+                                   Silinecek_YD = secilen_YDugum;
+                                   if (secilen_YDugum->onceki == 0)
+                                   {
+                                        secilen_YDugum = secilen_YDugum->sonraki;
+                                   }
+                                   else
+                                   {
 
-                                   secilen_YDugum = secilen_YDugum->onceki;
-                              }
-                              if (secilen != 0) // Eger silinecek Dugum ilk Dugume isset ise secilenden azaltmaz
-                              {
+                                        secilen_YDugum = secilen_YDugum->onceki;
+                                   }
+                                   if (secilen != 0) // Eger silinecek Dugum ilk Dugume isset ise secilenden azaltmaz
+                                   {
 
-                                   /* code */
-                                   secilen--;
-                              }
+                                        /* code */
+                                        secilen--;
+                                   }
+                                   if (secilen == (burayakadar_yazdir * 8 - Baslangic) - 1)
+                                   {
+                                        secilen--;
+                                   }
 
-                              YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
-                              YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
-                              YD_sil_sonra(Baslangic, burayakadar_yazdir, sayfa_Adet);
+                                   YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
+                                   YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
+                                   YD_sil_sonra(Baslangic, burayakadar_yazdir, sayfa_Adet);
+                              }
                          }
                     }
                }
-
                break;
 
           case 'p':
@@ -316,6 +324,7 @@ int main()
                break;
 
           case '8':
+               // program kapatmadan once Heapteki bulunan tum nesneleri silme
                delete YTest; // Tüm düğümleri sil
                delete[] okun_st;
                break;

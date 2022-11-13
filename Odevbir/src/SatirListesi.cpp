@@ -149,7 +149,7 @@ void ::SatirListesi::Dugum_Sil(Dugum *silinecek_Dugum)
         delete silinecek_Dugum; // silinecek dugum silip ve Dugum sayisi bir azaltik
         Dugum_Sayisi--;
     }
-    Ort_Hesapla();
+    this->Ort_Hesapla();
 }
 
 Dugum * ::SatirListesi::get_D_byindeks(int indeks)
