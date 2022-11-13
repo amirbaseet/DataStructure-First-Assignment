@@ -37,15 +37,11 @@ double SatirListesi::Ortalama_getir() const
 }
 void SatirListesi::Ort_Hesapla()
 {
+    // tum dugumlerin ortalamisi getiren bir fonksiyondur
     Dugum *gec = ilk;
     double ortalama = 0;
     int Dugum_Sayisi = Dugum_Sayisi_Getir();
-    // if (Dugum_Sayisi == 0)
-    // { /* Eger dugum Sayisi 0 ise 0 dondur 0/sayi olmamasi icin*/
-    //     Dugum_Ortalama = 0;
-    // }
-    // else
-    // {
+
     for (int i = 0; i < Dugum_Sayisi; i++)
     {
         ortalama += gec->veri;
@@ -53,14 +49,13 @@ void SatirListesi::Ort_Hesapla()
     }
     ortalama /= Dugum_Sayisi;
     Dugum_Ortalama = ortalama;
-    // }
 }
 
 void SatirListesi::Dugum_Ekle(const int veri)
 {
     /*
     ilk once Dugum sinifindan yeni bir isaretci tanitiyorum sonra
-     "heap"te Dugum sinifindan yeni bir nesne ugretmek
+     "heap"te Dugum sinifindan yeni bir nesne olusturuyorum
      sonra ilk kosulumuzda satirListesisin ilk dugum var mi onu kontrol ediyorum
      yoksa son dugume gidip yeni dugume olusturup son dugumin sonrakine yeni dugumun adresini atma
      ve yeni dugumun oncekinin adresine son dugumun adresini atma
@@ -117,13 +112,11 @@ void ::SatirListesi::Dugum_Sil(Dugum *silinecek_Dugum)
         /*burda  SatirListesi nin dugum sayisi kontrol ediyiorum
         eger hic bir dugum yoksa silme yapmaz*/
         // return;
-        cout << "\n\n\n\nBURDAYIIIIM 119\n\n\n\n\n";
     }
     if (Dis_dugum_sayisi == 1)
     {
         /* Eger Tek Dugum varsa
         ilk Dugum silinip ilk e 0 atma*/
-        cout << "\n\n\n\nBURDAYIIIIM 124\n\n\n\n\n";
 
         delete ilk;
         ilk = 0;

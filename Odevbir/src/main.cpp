@@ -18,22 +18,17 @@
 #include <iomanip>
 
 using namespace std;
-void solaGit(float &sayfa_Adet, float &burayakadar_yazdir, float &Baslangic)
+void solaGit(float &sayfa_Adet, float &burayakadar_yazdir, float &Baslangic) // sol sayfa varsa giden bir fonksiyon
 {
-     cout << "\n\n\n\n17Baslangic = " << Baslangic << "\tburayakadar_yazdir= " << burayakadar_yazdir << "sayfa_Adet = " << sayfa_Adet << endl;
-
-     cout << "\n\n\n\n17Baslangic = " << Baslangic << "\tburayakadar_yazdir - sayfa_Adet= " << burayakadar_yazdir - sayfa_Adet << "sayfa_Adet = " << sayfa_Adet << endl;
 
      if (sayfa_Adet - burayakadar_yazdir != sayfa_Adet - 1) // Eger ilk sayfada bulunmuyorsa onceki sayfa Yazdir
      {
           if (sayfa_Adet - burayakadar_yazdir > 0) // Eger son sayfada degil ve birinci sayfada da degil ise burda gersin
           {
-               cout << "bordayiim 24\n";
                burayakadar_yazdir--;
           }
           else if (sayfa_Adet - burayakadar_yazdir == 0)
           {
-               cout << "bordayiim 29\n";
 
                // eger tum elemanlari yazdirildi ise .000 kurtalmak icin
                burayakadar_yazdir = Baslangic / 8;
@@ -42,19 +37,17 @@ void solaGit(float &sayfa_Adet, float &burayakadar_yazdir, float &Baslangic)
           if (burayakadar_yazdir >= 1)
           { // Eger burayakadar_yazdir 8 taneden buyuk ise baslangic =burayakadar_yazdir -8
                Baslangic = burayakadar_yazdir - 1;
-               cout << "\n\n\n\n39Baslangic = " << Baslangic * 8 << "\tburayakadar_yazdir= " << burayakadar_yazdir << endl;
           }
           else
           {
                Baslangic = 0;
-               cout << "\n\n\n\n43Baslangic = " << Baslangic * 8 << "\tburayakadar_yazdir= " << burayakadar_yazdir << endl;
           }
           Baslangic *= 8;
      }
      // system("cls");
 }
 void SagGit(float &sayfa_Adet, float &burayakadar_yazdir, const int &YD_Dugumsayisi, float &Baslangic)
-{
+{ // sag sayfa varsa giden bir fonksiyon
      if (burayakadar_yazdir * 8 != YD_Dugumsayisi)
      {
           Baslangic = burayakadar_yazdir * 8;
@@ -74,7 +67,6 @@ void YD_sil_sonra(float &Baslangic, float &burayakadar_yazdir, float &sayfa_Adet
 {
      if (Baslangic == ((burayakadar_yazdir * 8) - 1)) // Eger Sayfada Tek Dugum Varsa silindikten sonra Sayfada Hic Bir dugum kalmadiginden  onceki Sayfa ya Yazdirilacak
      {
-          cout << "\n\n\n\nsolaGit(sayfa_Adet, burayakadar_yazdir, Baslangic);\n";
           solaGit(sayfa_Adet, burayakadar_yazdir, Baslangic);
      }
      else if (burayakadar_yazdir == sayfa_Adet)
@@ -83,29 +75,31 @@ void YD_sil_sonra(float &Baslangic, float &burayakadar_yazdir, float &sayfa_Adet
           burayakadar_yazdir--;
           burayakadar_yazdir /= 8;
      }
-     else
-     {
-          cout << "\n\n\n\n!!!!!!!!solaGit(sayfa_Adet, burayakadar_yazdir, Baslangic);\n";
-     }
 }
 Y_Dugum *sonraki_Dugum_git(Y_Dugum *secilen_YDugum, int &secilen, float &burayakadar_yazdir, float &Baslangic)
 {
      if (secilen_YDugum->sonraki != 0 && secilen < (burayakadar_yazdir * 8 - Baslangic - 1))
      {
-
-          cout << "\n221(burayakadar_yazdir - Baslangic - 1) " << (burayakadar_yazdir * 8 - Baslangic - 1) << endl;
-          cout << "secilen YD = " << secilen_YDugum << "\tBaslangic = " << Baslangic << "\tburayakadar_yazdir " << burayakadar_yazdir * 8 << endl;
-
-          /* Eger Secilen Dugum son ise sonrasina gitmez*/
-
+          /* Eger Secilen Dugum son ve sayfada son dugum ise sonrasina gitmez*/
           secilen++;
           secilen_YDugum = secilen_YDugum->sonraki;
      }
      return secilen_YDugum;
 }
+Y_Dugum *sonraki_sayfa_birinciD_sec(const float &Baslangic, Y_Dugum *secilen_YDugum, int &secilen)
+{ // sag yada sol sayfa giderken yeni sayfada ilk Ydugum secen bir fonksiyon
+     for (int i = 0; i < Baslangic; i++)
+     {
+          /* code */
+          secilen_YDugum = secilen_YDugum->sonraki; // bu yeni Sayfanin ilk dugumu olacak
+     }
+     secilen = 0;
+     return secilen_YDugum;
+}
 int main()
 {
 
+     //////////////////////////////////FILE DEN OKUMA ISLEMLERI BASLANGICI///////////////////////////////////////////////////////////////
      ifstream myfile("src/veriler.txt");
      // read line
      int sayac = 0;
@@ -113,25 +107,32 @@ int main()
      string bosluk = " ";
      /* code */
      if (!myfile)
-          cout << "Erororororororoorororororororooror\n";
+          cout << "HATA\n";
+     // ilk once satirlarin sayisini getiriyorum
      while (getline(myfile, satir))
      {
           sayac++;
      }
      cout << sayac << endl;
-
      myfile.close();
+     // satirlistesinden heap te bir dizi olusturuyorum satirlarin sayisi kadar bir  uzuzunlugu sahip
      SatirListesi *okun_st = new SatirListesi[sayac];
+     YoneticiListesi *YTest = new YoneticiListesi; // heap te Yonetici listesi olusturuyorum
      myfile.open("src/veriler.txt");
      int Kacinci_sati = 0;
-     char sil_mi;
-     YoneticiListesi *YTest = new YoneticiListesi;
 
      string str;
-     string token;
-     while (std::getline(myfile, token))
+     /*
+     burda .txt ten satirlari okuyorum
+     her satir komple alip sonra o satir da islemler yapiyorum
+     ilk olarak satir bosluk kadar okumak sonra bulunan sayi heapte bulunan "okun_st" a ekliyorum
+     sonra boluga  kadar siliyorum ve satira son bosluga kadar  ayni islemler yapmak
+     bitince sonraki satira gecip ayni islemler yapma
+     boyle satirlari bitene kadar
+     */
+     while (std::getline(myfile, bosluk))
      {
-          istringstream ss(token);
+          istringstream ss(bosluk);
           while (getline(ss, str, ' '))
           {
                okun_st[Kacinci_sati].Dugum_Ekle(stoi(str));
@@ -143,24 +144,30 @@ int main()
           Kacinci_sati++;
      }
      myfile.close();
-     YTest->Y_Dugum_Siralama(); // ekleme yaptiktan sonra yonetici dugum listesi ortalamasine gore siraliyorum
+     //////////////////////////////////FILE DEN OKUMA ISLEMLERI BITISI///////////////////////////////////////////////////////////////
 
-     float birblok = 21.3; // her bir iki dugumun arasinda uzaklasacak mesafe
-     int secilen = 0;
-     float sayfa_Adet = 0.000;
-     float burayakadar_yazdir;
-     float Baslangic = 0.00;
+     // ekleme yaptiktan sonra yonetici dugum listesi ortalamasine gore siraliyorum
+     YTest->Y_Dugum_Siralama();
 
-     int uzaklasacak_mesafe = birblok * secilen;
+     float birblok = 21.3;                               // her bir iki dugumun arasinda uzaklasacak mesafe
+     float sayfa_Adet = 0.000;                           // DUGUM SAYISI 8 E BOLUB KAC SAYFA OLDUGUNU BILEBILERIZ
+     float burayakadar_yazdir;                           // HANGI DUGUME KADAR YAZDIRILICAK
+     float Baslangic = 0.00;                             // HANGI DUGUMDEN YAZDIRMA BASLAMA
+     float YD_Dugumsayisi = YTest->YDugumSayisi_Getir(); // YONETICI LISTESINDE DUGUM SAYISI TUTUAN
+
+     int secilen = 0;                            // YAZDIRILICAGINDAN KACINICI DUGUM SIRASI DONDUREN
+     int silinecekDugumun_indeksi;               // RASTGELE SILINECEK DUGUMUN INDEKSI TUTAN
+     int uzaklasacak_mesafe = birblok * secilen; // UZAKLASACAK MESAFE SECILEN DUGUM KACINCI OLDUGUNU *BIR BLOCK
+
+     char sil_mi; //(SATIR LISTESINDE DUGUM SILME YAPARKEN _)K BASMA KONTROLI=U
+     char in;
+
      Y_Dugum *secilen_YDugum = YTest->ilkGetir();
      Y_Dugum *Silinecek_YD;
      Y_Dugum *ilk;
-
      Dugum *silinecek_Dugum;
-     int silinecekDugumun_indeksi;
-     char in;
-     float YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
-     sayfa_Adet = YD_Dugumsayisi / 8;
+
+     sayfa_Adet = YD_Dugumsayisi / 8; // DUGUM SAYISI 8 E BOLUB KAC SAYFA OLDUGUNU BILEBILERIZ
      if (YD_Dugumsayisi / 8 >= 1)
      {
           burayakadar_yazdir = 1;
@@ -172,30 +179,28 @@ int main()
      char intest;
      do
      {
-          system("cls");
 
-          YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
-          sayfa_Adet = YD_Dugumsayisi / 8;
-
-          uzaklasacak_mesafe = birblok * secilen;
           if (YTest->ilkGetir())
           {
+
+               YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
+               sayfa_Adet = YD_Dugumsayisi / 8; // YONETICI DUGUMLARIN SAYISI HER SEFERDE DEGISEBILDIGI ICIN HER YAZDIRMA ISLEMDEN ONCE SAYFA ADETI HEAPLIYORUM
+               uzaklasacak_mesafe = birblok * secilen;
+
+               system("cls");
                YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
                secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
-               cout << "\nsecilen =" << secilen << "\n uzaklasacak_mesafe =" << uzaklasacak_mesafe << endl;
-
-               cout << "secilen YD = " << secilen_YDugum << "\tBaslangic = " << Baslangic << "\tburayakadar_yazdir " << burayakadar_yazdir * 8 << endl;
-               cout << "\n\n\n\n17Baslangic = " << Baslangic << "\tburayakadar_yazdir= " << burayakadar_yazdir << "sayfa_Adet = " << sayfa_Adet << endl;
 
                cin >> in;
           }
           else
           {
                YTest->YL_Yazdir();
-               cout << "/nYonetici Listesi Bos oldugundan Bir sey Yazdirilmeyecktir lutfen 8 basin program kapatsin/n";
+               cout << "HIC BIR DUGUM KALMADIGINDAN BIR SEY GOSTERILMEYECEK BASIN PROGRAM SOLANDIRMAK ICIN LUTFEN 8 E\n";
                cin >> intest;
                if (intest == '8')
                {
+                    cout << "HEAP te bulunan nesneler siliyorum \n";
                     in = '8';
                }
           }
@@ -203,29 +208,20 @@ int main()
           switch (in)
           {
           case 'd': // 8tane sag git
-               secilen_YDugum = YTest->ilkGetir();
                // if (YD_Dugumsayisi != 0)
                // {
                SagGit(sayfa_Adet, burayakadar_yazdir, YD_Dugumsayisi, Baslangic);
+               ///
+               secilen_YDugum = YTest->ilkGetir();
+               secilen_YDugum = sonraki_sayfa_birinciD_sec(Baslangic, secilen_YDugum, secilen);
 
-               for (int i = 0; i < Baslangic; i++)
-               {
-                    /* code */
-                    secilen_YDugum = secilen_YDugum->sonraki; // bu yeni Sayfanin ilk dugumu olacak
-               }
-               cout << "\n\n\n181 secD = " << secilen_YDugum;
-               secilen = 0;
                break;
           case 'a': // 8tane sola git
                solaGit(sayfa_Adet, burayakadar_yazdir, Baslangic);
                secilen_YDugum = YTest->ilkGetir();
 
-               for (int i = 0; i < Baslangic; i++)
-               {
-                    /* code */
-                    secilen_YDugum = secilen_YDugum->sonraki; // bu yeni Sayfanin ilk dugumu olacak
-               }
-               secilen = 0;
+               secilen_YDugum = sonraki_sayfa_birinciD_sec(Baslangic, secilen_YDugum, secilen);
+
                break;
 
                /*sonraki/onceki YDugum sec case z & c*/
@@ -243,6 +239,8 @@ int main()
                break;
           case 'k':
                // secilen ydugmun rastgele secme
+               system("cls");
+
                silinecekDugumun_indeksi = secilen_YDugum->S_Liste->Dugum_Sil_rastgele();
                YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
                silinecek_Dugum = secilen_YDugum->S_Liste->get_D_byindeks(silinecekDugumun_indeksi);
@@ -266,7 +264,6 @@ int main()
                               Silinecek_YD = secilen_YDugum;
                               if (secilen_YDugum->onceki == 0)
                               {
-                                   cout << "\265\n";
                                    secilen_YDugum = secilen_YDugum->sonraki;
                               }
                               else
@@ -281,7 +278,6 @@ int main()
                                    secilen--;
                               }
 
-                              cout << "\n\n\n\n280Baslangic = " << Baslangic << "\tburayakadar_yazdir= " << burayakadar_yazdir * 8 << endl;
                               YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
                               YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
                               YD_sil_sonra(Baslangic, burayakadar_yazdir, sayfa_Adet);
@@ -299,7 +295,6 @@ int main()
                     Silinecek_YD = secilen_YDugum;
                     if (secilen_YDugum->onceki == 0)
                     {
-                         cout << "\n249\n";
                          secilen_YDugum = secilen_YDugum->sonraki;
                     }
                     else
@@ -314,7 +309,6 @@ int main()
                          secilen--;
                     }
 
-                    cout << "\n\n\n\n254Baslangic = " << Baslangic << "\tburayakadar_yazdir= " << burayakadar_yazdir * 8 << endl;
                     YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
                     YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
                     YD_sil_sonra(Baslangic, burayakadar_yazdir, sayfa_Adet);
@@ -322,8 +316,8 @@ int main()
                break;
 
           case '8':
-               // delete[] okun_st;
                delete YTest; // Tüm düğümleri sil
+               delete[] okun_st;
                break;
           default:
                break;

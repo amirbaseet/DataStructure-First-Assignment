@@ -1,6 +1,6 @@
 /**
  * @file SatirListesi.hpp
- * @description Programınızın açıklaması ne yaptığına dair.
+ * @description Satir listesi icin iki yonlu bagli list olusturdum
  * @course 2C
  * @assignment birinci ödev
  * @date 1/12/2022

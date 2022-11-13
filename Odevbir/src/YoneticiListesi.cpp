@@ -64,14 +64,12 @@ void ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis)
     {
         cout << "Listesi Bos gosterilecek bir sey yok\n";
     }
-    cout << "\n\n42BAslangic =" << Baslan << "Bitis = " << bitis;
 
     int isaretci_Uzunlugu = 21; // aslinda uzunlugu 13 ama 8 basamaktan sora gelebilemesi icin ona 8 ya ekliriz
     int son_on_Uzunlugu = 23;   // aslinda uzunlugu 13 ama || iki tane geldigi icin ona 2 ekliriz
     bitis -= Baslan;            // yazdirilacak sayisi getiriyorum bitis degerden  baslangec deger alarak
     if (bitis == 0)
         bitis++;
-    cout << "\n\n47BAslangic =" << Baslan << "Bitis = " << bitis;
     ////
     Y_Dugum *gec;
     secilen = this->ilk;
