@@ -148,7 +148,7 @@ void ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis)
         }
         else
         {
-            cout << "|" << gec->onceki << "|" << setw(7);
+            cout << "|" << setw(13) << gec->onceki << "|" << setw(7);
         }
         gec = gec->sonraki;
     }
@@ -216,7 +216,7 @@ void ::YoneticiListesi::YL_Sag_Yazdir(int Baslan, int bitis)
         else
         {
 
-            cout << "|" << setw(3) << gec->sonraki << "|" << setw(7);
+            cout << "|" << setw(13) << gec->sonraki << "|" << setw(7);
         }
         gec = gec->sonraki;
     }

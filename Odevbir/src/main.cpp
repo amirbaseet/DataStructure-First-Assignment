@@ -112,7 +112,7 @@ int main()
                system("cls");
                YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
                secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
-               cout << "\nsecilen Dugum  = " << secilen_YDugum << " secilen = " << secilen << "Baslangic = " << Baslangic << "bitis =" << burayakadar_yazdir * 8 << endl;
+               // cout << "\nsecilen Dugum  = " << secilen_YDugum << " secilen = " << secilen << "Baslangic = " << Baslangic << "bitis =" << burayakadar_yazdir * 8 << endl;
 
                cin >> in;
           }

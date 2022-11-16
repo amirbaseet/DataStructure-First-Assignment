@@ -169,13 +169,15 @@ void ::SatirListesi::YD_silinecek_Sat_Dugm_Yazdir_(Dugum *silinecek, int mesafe)
     cout << setfill(' ');
     while (gec != 0)
     {
-        cout << setw(mesafe) << ""
+        cout << setw(mesafe - 1) << ""
+             << "^^^^^^^^^^^^^^" << endl;
+        cout << setw(mesafe - 1) << ""
              << "---------------" << endl;
-        cout << setw(mesafe) << "|" << setw(3) << gec << setw(2) << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
-        cout << setw(mesafe) << ""
+        cout << setw(mesafe) << "|" << setw(13) << gec << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
+        cout << setw(mesafe - 1) << ""
              << "---------------" << endl;
-        cout << setw(mesafe) << "|" << setw(7) << gec->veri << setw(8) << "|" << endl;
-        cout << setw(mesafe) << ""
+        cout << setw(mesafe) << "|" << setw(7) << gec->veri << setw(7) << "|" << endl;
+        cout << setw(mesafe - 1) << ""
              << "---------------";
         if (gec == silinecek)
             cout << setw(10) << "<-----silinecek secili";
@@ -183,7 +185,7 @@ void ::SatirListesi::YD_silinecek_Sat_Dugm_Yazdir_(Dugum *silinecek, int mesafe)
         // Duzgun bir sekilde cikabilmesi icin if gec son dugum ise once"|"Yazdir sonra 7 inci basamakta gec yazdir
         // sonra 8inci basamakta"|" yazdir
 
-        cout << setw(mesafe) << "|" << setw(14) << gec->sonraki << "|" << endl
+        cout << setw(mesafe) << "|" << setw(13) << gec->sonraki << "|" << endl
              << endl;
         gec = gec->sonraki;
     }
@@ -194,18 +196,19 @@ void ::SatirListesi::YD_Sat_Dugm_Yazdir(int mesafe)
     cout << setfill(' ');
     while (gec != 0)
     {
-        cout << setw(mesafe) << ""
+        cout << setw(mesafe - 1) << ""
+             << "^^^^^^^^^^^^^^" << endl;
+        cout << setw(mesafe - 1) << ""
              << "---------------" << endl;
-        cout << setw(mesafe) << "|" << setw(3) << gec << setw(2) << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
-        cout << setw(mesafe) << ""
+        cout << setw(mesafe) << "|" << setw(13) << gec << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir
+        cout << setw(mesafe - 1) << ""
              << "---------------" << endl;
-        cout << setw(mesafe) << "|" << setw(7) << gec->veri << setw(8) << "|" << endl;
-        cout << setw(mesafe) << ""
+        cout << setw(mesafe) << "|" << setw(7) << gec->veri << setw(7) << "|" << endl;
+        cout << setw(mesafe - 1) << ""
              << "---------------" << endl;
         // Duzgun bir sekilde cikabilmesi icin if gec son dugum ise once"|"Yazdir sonra 7 inci basamakta gec yazdir
         // sonra 8inci basamakta"|" yazdir
-
-        cout << setw(mesafe) << "|" << setw(14) << gec->sonraki << "|" << endl
+        cout << setw(mesafe) << "|" << setw(13) << gec->sonraki << "|" << endl
              << endl;
         gec = gec->sonraki;
     }
