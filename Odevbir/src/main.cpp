@@ -35,7 +35,7 @@ int main()
      {
           sayac++;
      }
-     cout << sayac << endl;
+     // cout << sayac << endl;
      myfile.close();
      // satirlistesinden heap te bir dizi olusturuyorum satirlarin sayisi kadar bir  uzuzunlugu sahip
      SatirListesi *okun_st = new SatirListesi[sayac];
@@ -111,15 +111,15 @@ int main()
 
                system("cls");
                YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
+               // cout << "\nsecilen Dugum  = " << secilen_YDugum << endl;
                secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
-               // cout << "\nsecilen Dugum  = " << secilen_YDugum << " secilen = " << secilen << "Baslangic = " << Baslangic << "bitis =" << burayakadar_yazdir * 8 << endl;
 
                cin >> in;
           }
           else
           {
                YTest->YL_Yazdir();
-               cout << "HIC BIR DUGUM KALMADIGINDAN BIR SEY GOSTERILMEYECEK  HEAP TE KALAN NESNELER SILIP VE PROGRAM SOLANDIRMAK  ICIN LUTFEN 8 BASIN E\n";
+               cout << "HIC BIR DUGUM KALMADIGINDAN BIR SEY GOSTERILMEYECEK  HEAP TE KALAN NESNELER SILIP VE PROGRAM SOLANDIRMAK  ICIN LUTFEN 8 E BASIN \n";
                cin >> intest;
                if (intest == '8')
                {

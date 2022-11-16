@@ -193,11 +193,12 @@ void ::SatirListesi::YD_silinecek_Sat_Dugm_Yazdir_(Dugum *silinecek, int mesafe)
 void ::SatirListesi::YD_Sat_Dugm_Yazdir(int mesafe)
 {
     Dugum *gec = this->ilk;
+    cout << setw(mesafe - 1) << ""
+         << "^^^^^^^^^^^^^^" << endl;
     cout << setfill(' ');
     while (gec != 0)
     {
-        cout << setw(mesafe - 1) << ""
-             << "^^^^^^^^^^^^^^" << endl;
+
         cout << setw(mesafe - 1) << ""
              << "---------------" << endl;
         cout << setw(mesafe) << "|" << setw(13) << gec << "|" << endl; // ilk once "|"Yazdir sonra 3 uncu basamakta gec yazdir

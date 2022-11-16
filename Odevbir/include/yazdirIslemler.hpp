@@ -105,13 +105,11 @@ Y_Dugum *sonraki_Dugum_git(Y_Dugum *secilen_YDugum, float &sayfa_Ade, const int 
     if (secilen_YDugum->sonraki != 0 && secilen < (burayakadar_yazdir * 8 - Baslangic - 1))
     {
         /* Eger Secilen Dugum son ve sayfada son dugum ise sonrasina gitmez*/
-        cout << "\n104\n";
         secilen++;
         secilen_YDugum = secilen_YDugum->sonraki;
     }
     else if (secilen_YDugum->sonraki != 0 && secilen == (burayakadar_yazdir * 8 - Baslangic - 1))
     {
-        cout << "\n110\n";
         SagGit(sayfa_Ade, burayakadar_yazdir, YD_Dugumsayisi, Baslangic);
         secilen_YDugum = ilk;
         secilen_YDugum = sonraki_sayfa_birinciD_sec(Baslangic, secilen_YDugum, secilen);
