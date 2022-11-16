@@ -44,7 +44,6 @@ void solaGit(float &sayfa_Adet, float &burayakadar_yazdir, float &Baslangic) // 
           }
           Baslangic *= 8;
      }
-     // system("cls");
 }
 void SagGit(float &sayfa_Adet, float &burayakadar_yazdir, const int &YD_Dugumsayisi, float &Baslangic)
 { // sag sayfa varsa giden bir fonksiyon
@@ -76,16 +75,7 @@ void YD_sil_sonra(float &Baslangic, float &burayakadar_yazdir, float &sayfa_Adet
           burayakadar_yazdir /= 8;
      }
 }
-Y_Dugum *sonraki_Dugum_git(Y_Dugum *secilen_YDugum, int &secilen, float &burayakadar_yazdir, float &Baslangic)
-{
-     if (secilen_YDugum->sonraki != 0 && secilen < (burayakadar_yazdir * 8 - Baslangic - 1))
-     {
-          /* Eger Secilen Dugum son ve sayfada son dugum ise sonrasina gitmez*/
-          secilen++;
-          secilen_YDugum = secilen_YDugum->sonraki;
-     }
-     return secilen_YDugum;
-}
+
 Y_Dugum *sonraki_sayfa_birinciD_sec(const float &Baslangic, Y_Dugum *secilen_YDugum, int &secilen)
 { // sag yada sol sayfa giderken yeni sayfada ilk Ydugum secen bir fonksiyon
      for (int i = 0; i < Baslangic; i++)
@@ -94,6 +84,66 @@ Y_Dugum *sonraki_sayfa_birinciD_sec(const float &Baslangic, Y_Dugum *secilen_YDu
           secilen_YDugum = secilen_YDugum->sonraki; // bu yeni Sayfanin ilk dugumu olacak
      }
      secilen = 0;
+     return secilen_YDugum;
+}
+Y_Dugum *Onceki_sayfa_SonD_sec(const float &Baslangic, const float &bitis, Y_Dugum *secilen_YDugum, int &secilen)
+{                                              // sag yada sol sayfa giderken yeni sayfada ilk Ydugum secen bir fonksiyon
+     for (int i = 0; i < (bitis * 8) - 1; i++) // bitis*8 -1 cunku bitis son yazdirilanin sonraki issetir 8
+     {
+          /* code */
+          secilen_YDugum = secilen_YDugum->sonraki; // bu yeni Sayfanin ilk dugumu olacak
+     }
+     secilen = (bitis * 8 - 1) - Baslangic;
+     return secilen_YDugum;
+}
+Y_Dugum *Siralama_sonra_YDsec(Y_Dugum *secilen_YDugum, Y_Dugum *ilk, const int &secilen, const float &Baslangic)
+{
+     int dugum_indeksi = secilen + Baslangic;
+     secilen_YDugum = ilk;
+     for (int i = 0; i < dugum_indeksi; i++)
+     {
+          /* code */
+          secilen_YDugum = secilen_YDugum->sonraki; // bu yeni Sayfanin ilk dugumu olacak
+     }
+     return secilen_YDugum;
+}
+Y_Dugum *sonraki_Dugum_git(Y_Dugum *secilen_YDugum, float &sayfa_Ade, const int &YD_Dugumsayisi, Y_Dugum *ilk, int &secilen, float &burayakadar_yazdir, float &Baslangic)
+{
+     if (secilen_YDugum->sonraki != 0 && secilen < (burayakadar_yazdir * 8 - Baslangic - 1))
+     {
+          /* Eger Secilen Dugum son ve sayfada son dugum ise sonrasina gitmez*/
+          cout << "\n104\n";
+          secilen++;
+          secilen_YDugum = secilen_YDugum->sonraki;
+     }
+     else if (secilen_YDugum->sonraki != 0 && secilen == (burayakadar_yazdir * 8 - Baslangic - 1))
+     {
+          cout << "\n110\n";
+          SagGit(sayfa_Ade, burayakadar_yazdir, YD_Dugumsayisi, Baslangic);
+          secilen_YDugum = ilk;
+          secilen_YDugum = sonraki_sayfa_birinciD_sec(Baslangic, secilen_YDugum, secilen);
+     }
+
+     return secilen_YDugum;
+}
+Y_Dugum *Onceki_Dugum_git(Y_Dugum *secilen_YDugum, float &sayfa_Ade, const int &YD_Dugumsayisi, Y_Dugum *ilk, int &secilen, float &burayakadar_yazdir, float &Baslangic)
+{
+     if (secilen_YDugum != ilk)
+     {
+          if (secilen != 0)
+          {
+               /*Eger Secilen Dugumun Onceki Dugumun adresi 0 degil ise onceki gitmez */
+               secilen--;
+               secilen_YDugum = secilen_YDugum->onceki;
+          }
+          else if (secilen == 0 && secilen_YDugum->onceki != 0)
+          {
+
+               solaGit(sayfa_Ade, burayakadar_yazdir, Baslangic);
+               secilen_YDugum = ilk;
+               secilen_YDugum = Onceki_sayfa_SonD_sec(Baslangic, burayakadar_yazdir, secilen_YDugum, secilen);
+          }
+     }
      return secilen_YDugum;
 }
 int main()
@@ -149,7 +199,7 @@ int main()
      // ekleme yaptiktan sonra yonetici dugum listesi ortalamasine gore siraliyorum
      YTest->Y_Dugum_Siralama();
 
-     float birblok = 21.3;                               // her bir iki dugumun arasinda uzaklasacak mesafe
+     float birblok = 21.2;                               // her bir iki dugumun arasinda uzaklasacak mesafe
      float sayfa_Adet = 0.000;                           // DUGUM SAYISI 8 E BOLUB KAC SAYFA OLDUGUNU BILEBILERIZ
      float burayakadar_yazdir;                           // HANGI DUGUME KADAR YAZDIRILICAK
      float Baslangic = 0.00;                             // HANGI DUGUMDEN YAZDIRMA BASLAMA
@@ -187,9 +237,10 @@ int main()
                sayfa_Adet = YD_Dugumsayisi / 8; // YONETICI DUGUMLARIN SAYISI HER SEFERDE DEGISEBILDIGI ICIN HER YAZDIRMA ISLEMDEN ONCE SAYFA ADETI HEAPLIYORUM
                uzaklasacak_mesafe = birblok * secilen;
 
-               system("cls");
+               // system("cls");
                YTest->YL_Sag_Yazdir(Baslangic, burayakadar_yazdir * 8);
                secilen_YDugum->S_Liste->YD_Sat_Dugm_Yazdir(uzaklasacak_mesafe);
+               cout << "\nsecilen Dugum  = " << secilen_YDugum << " secilen = " << secilen << "Baslangic = " << Baslangic << "bitis =" << burayakadar_yazdir * 8 << endl;
 
                cin >> in;
           }
@@ -210,8 +261,6 @@ int main()
           switch (in)
           {
           case 'd': // 8tane sag git
-               // if (YD_Dugumsayisi != 0)
-               // {
                SagGit(sayfa_Adet, burayakadar_yazdir, YD_Dugumsayisi, Baslangic);
                ///
                secilen_YDugum = YTest->ilkGetir();
@@ -228,16 +277,11 @@ int main()
 
                /*sonraki/onceki YDugum sec case z & c*/
           case 'z': /*Kullanıcı ‘z’ tuşuna bastığında seçili düğüm bir öncekine*/
-               if (secilen_YDugum != YTest->ilkGetir() && secilen != 0)
-               {
-                    /*Eger Secilen Dugumun Onceki Dugumun adresi 0 degil ise onceki gitmez */
-                    secilen--;
-                    secilen_YDugum = secilen_YDugum->onceki;
-               }
+               secilen_YDugum = Onceki_Dugum_git(secilen_YDugum, sayfa_Adet, YD_Dugumsayisi, YTest->ilkGetir(), secilen, burayakadar_yazdir, Baslangic);
 
                break;
           case 'c': /*‘c’ tuşuna bastığında bir sonraki düğüme secer*/
-               secilen_YDugum = sonraki_Dugum_git(secilen_YDugum, secilen, burayakadar_yazdir, Baslangic);
+               secilen_YDugum = sonraki_Dugum_git(secilen_YDugum, sayfa_Adet, YD_Dugumsayisi, YTest->ilkGetir(), secilen, burayakadar_yazdir, Baslangic);
                break;
           case 'k':
                // secilen ydugmun rastgele secme
@@ -252,13 +296,14 @@ int main()
                     cin >> sil_mi;
                     if (sil_mi == 'k')
                     {
+
                          secilen_YDugum->S_Liste->Dugum_Sil(silinecek_Dugum);
 
                          if (secilen_YDugum->S_Liste->Dugum_Sayisi_Getir() != 0)
                          {
-                              cout << "\n\n254\n\n";
                               secilen_YDugum->Ort_Getir();
                               YTest->Y_Dugum_Siralama();
+                              secilen_YDugum = Siralama_sonra_YDsec(secilen_YDugum, YTest->ilkGetir(), secilen, Baslangic);
                          }
                          else
                          {
@@ -266,22 +311,14 @@ int main()
                               if (ilk != 0)            // Eger Hic bir dugum kalmamis ise burada girmez
                               {
                                    Silinecek_YD = secilen_YDugum;
-                                   if (secilen_YDugum->onceki == 0)
-                                   {
-                                        secilen_YDugum = secilen_YDugum->sonraki;
-                                   }
-                                   else
-                                   {
 
-                                        secilen_YDugum = secilen_YDugum->onceki;
-                                   }
                                    if (secilen != 0) // Eger silinecek Dugum ilk Dugume isset ise secilenden azaltmaz
                                    {
 
                                         /* code */
                                         secilen--;
                                    }
-                                   if (secilen == (burayakadar_yazdir * 8 - Baslangic) - 1)
+                                   if (secilen != 0 && secilen == (burayakadar_yazdir * 8 - Baslangic) - 1)
                                    {
                                         secilen--;
                                    }
@@ -289,6 +326,7 @@ int main()
                                    YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
                                    YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
                                    YD_sil_sonra(Baslangic, burayakadar_yazdir, sayfa_Adet);
+                                   secilen_YDugum = Siralama_sonra_YDsec(secilen_YDugum, YTest->ilkGetir(), secilen, Baslangic);
                               }
                          }
                     }
@@ -301,15 +339,6 @@ int main()
                if (ilk != 0)            // Eger Hic bir dugum kalmamis ise burada girmez
                {
                     Silinecek_YD = secilen_YDugum;
-                    if (secilen_YDugum->onceki == 0)
-                    {
-                         secilen_YDugum = secilen_YDugum->sonraki;
-                    }
-                    else
-                    {
-
-                         secilen_YDugum = secilen_YDugum->onceki;
-                    }
                     if (secilen != 0) // Eger silinecek Dugum ilk Dugume isset ise secilenden azaltmaz
                     {
 
@@ -317,14 +346,16 @@ int main()
                          secilen--;
                     }
 
-                    YTest->Y_Dugumun_Silme(Silinecek_YD); // onu silindikten sonra Y_Dugumun_Silme() fonksiyonda bir kosul koymustum eger hic bir dugum kalmadi ise Yonerici Listesi sil
+                    YTest->Y_Dugumun_Silme(Silinecek_YD);
                     YD_Dugumsayisi = YTest->YDugumSayisi_Getir();
                     YD_sil_sonra(Baslangic, burayakadar_yazdir, sayfa_Adet);
+                    secilen_YDugum = Siralama_sonra_YDsec(secilen_YDugum, YTest->ilkGetir(), secilen, Baslangic);
                }
                break;
 
           case '8':
                // program kapatmadan once Heapteki bulunan tum nesneleri silme
+               // ikiside sildim cunku tum okunan satirlistesi YTest Listesi olmayacagindan (bos satir olursa Ylistesi eklenmeyecek )o yuzdan heapte kalacak onu silmek delet komutu kullandim
                delete YTest; // Tüm düğümleri sil
                delete[] okun_st;
                break;
